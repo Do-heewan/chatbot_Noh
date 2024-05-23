@@ -15,6 +15,28 @@ from Source.FindAnswer import FindAnswer
 from model.IntentModel import IntentModel
 from qna.create_embedding_data import create_embedding_data
 
+
+# 로그 기능 구현
+from logging import handlers
+import logging
+
+#log settings
+LogFormatter = logging.Formatter('%(asctime)s,%(message)s')
+
+#handler settings
+LogHandler = handlers.TimedRotatingFileHandler(filename='./logs/chatbot.log', when='midnight', interval=1, encoding='utf-8')
+LogHandler.setFormatter(LogFormatter)
+LogHandler.suffix = "%Y%m%d"
+
+#logger set
+Logger = logging.getLogger()
+Logger.setLevel(logging.ERROR)
+Logger.addHandler(LogHandler)
+
+# use logger example
+# Logger.info("car is coming")
+
+
 # 전처리 객체 생성
 try:
     p = Preprocess(word2index_dic='./dict/chatbot_dict.bin',
@@ -67,6 +89,12 @@ def to_client(conn, addr):
         # 답변 검색
         f = FindAnswer(df=df, embedding_data=embedding_data ,preprocess=p)
         selected_qes, score, answer, imageUrl, query_intent = f.search(query, intent_name)
+
+        if score < 0.6:
+            answer = "부정확한 질문이거나 답변할 수 없습니다.\n 수일 내로 답변을 업데이트하겠습니다.\n 죄송합니다 :("
+            imageUrl = "없음"
+            # 사용자 질문, 예측 의도, 선택된 질문, 선택된 질문 의도, 유사도 점수
+            Logger.error(f"{query},{intent_name},{selected_qes},{query_intent},{score}")
 
         send_json_data_str = {
             "Query": selected_qes,
