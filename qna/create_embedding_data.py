@@ -39,4 +39,4 @@ class create_embedding_data:
         self.df['embedding_vector'] = self.df['질문 전처리'].progress_map(lambda x : self.model.encode(x))
         # self.df.to_excel("/Users/Home/Documents/GitHub/Chatbot4Univ/train_tools/qna/train_data_embedding.xlsx", index=False)
         embedding_data = torch.tensor(self.df['embedding_vector'].tolist())
-        torch.save(embedding_data, './embedding_data.pt')
+        torch.save(embedding_data, 'embedding_data.pt')
