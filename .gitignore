@@ -1,2 +1,4 @@
 
 model/IntentModel.py
+model/intent_model.h5
+model/__pycache__/IntentModel.cpython-36.pyc
