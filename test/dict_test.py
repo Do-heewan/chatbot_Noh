@@ -6,7 +6,7 @@ f = open("../dict/chatbot_dict.bin", "rb")
 word_index = pickle.load(f)
 f.close()
 
-sent = "안녕하세요. 테스트 코드입니다. 단어사전 만들기 성공! ^^"
+sent = "컴공 과사 번호 알려 줘!@#%%^&*()__"
 
 # 전처리 객체 생성
 p = Preprocess(userdic='../Source/user_dic.tsv')

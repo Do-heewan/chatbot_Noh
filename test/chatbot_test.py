@@ -30,6 +30,8 @@ while True:
     ret_data = json.loads(data)
     print("답변 : ")
     print(ret_data['Answer'])
+    print(message)
+    print(data)
     print("\n")
 
 # 챗봇 엔진 서버 연결 소켓 닫기
